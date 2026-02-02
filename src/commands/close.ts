@@ -1,9 +1,9 @@
 import { Command } from "commander";
-import { confirm } from "@inquirer/prompts";
 import { execGit, PWTError } from "../utils/exec";
-import { findRepoRoot, isWorktree, getOriginalRepo, expandHome } from "../utils/git";
+import { findWorktreeRoot, getOriginalRepo } from "../utils/git";
 import { getUncommittedChanges, getCommitsAheadBehind } from "../utils/branch";
-import { removeFromIndex, readIndex } from "../utils/index-manager";
+import { removeFromIndex } from "../utils/index-manager";
+import { promptConfirm } from "../utils/prompt";
 import { existsSync, rmSync } from "fs";
 import { join } from "path";
 
@@ -13,34 +13,35 @@ export function createCloseCommand(): Command {
     .action(async () => {
       try {
         const cwd = process.cwd();
-        
+
         // 5.1 Identify if current directory is a PWT-managed worktree
-        if (!isWorktree(cwd)) {
+        const worktreeRoot = findWorktreeRoot(cwd);
+        if (!worktreeRoot) {
           throw new PWTError(
             "Not in a worktree directory",
             "NOT_A_WORKTREE",
             "Run this command from within a worktree created with 'pwt new'"
           );
         }
-        
+
         // Get worktree info
-        const gitFile = join(cwd, ".git");
+        const gitFile = join(worktreeRoot, ".git");
         const originalRepo = getOriginalRepo(gitFile);
         const repoName = originalRepo.split("/").pop() || "unknown";
-        const worktreeName = cwd.split("/").pop() || "unknown";
-        
+        const worktreeName = worktreeRoot.split("/").pop() || "unknown";
+
         // 5.2 Get uncommitted changes summary
-        const uncommitted = getUncommittedChanges(cwd);
-        
+        const uncommitted = getUncommittedChanges(worktreeRoot);
+
         // 5.3 Get commits ahead/behind remote
-        const currentBranch = execGit(["rev-parse", "--abbrev-ref", "HEAD"], cwd);
-        const { ahead, behind } = getCommitsAheadBehind(cwd, currentBranch);
+        const currentBranch = execGit(["rev-parse", "--abbrev-ref", "HEAD"], worktreeRoot);
+        const { ahead, behind } = getCommitsAheadBehind(worktreeRoot, currentBranch);
         
         // 5.4 Display change summary
         console.log("Worktree Summary:");
         console.log(`  Name: ${worktreeName}`);
         console.log(`  Branch: ${currentBranch}`);
-        console.log(`  Path: ${cwd}`);
+        console.log(`  Path: ${worktreeRoot}`);
         
         if (uncommitted) {
           console.log("\nUncommitted changes:");
@@ -55,11 +56,8 @@ export function createCloseCommand(): Command {
         
         // 5.5 Require confirmation if uncommitted changes exist
         if (uncommitted) {
-          const confirmed = await confirm({
-            message: "You have uncommitted changes. Close anyway?",
-            default: false,
-          });
-          
+          const confirmed = await promptConfirm("You have uncommitted changes. Close anyway?");
+
           if (!confirmed) {
             console.log("Close cancelled.");
             process.exit(0);
@@ -69,14 +67,14 @@ export function createCloseCommand(): Command {
         // 5.6 Execute git worktree remove
         console.log("\nRemoving worktree...");
         try {
-          execGit(["worktree", "remove", cwd], originalRepo);
+          execGit(["worktree", "remove", worktreeRoot], originalRepo);
         } catch {
           // Worktree might already be removed or force required
         }
         
         // 5.7 Remove worktree directory if still exists
-        if (existsSync(cwd)) {
-          rmSync(cwd, { recursive: true, force: true });
+        if (existsSync(worktreeRoot)) {
+          rmSync(worktreeRoot, { recursive: true, force: true });
         }
         
         // 5.8 Remove entry from worktree index

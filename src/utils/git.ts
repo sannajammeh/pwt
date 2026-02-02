@@ -51,12 +51,12 @@ export function getOriginalRepo(worktreeGitFile: string): string {
       "The .git file appears to be corrupted"
     );
   }
-  const worktreesIndex = gitdir.indexOf("/worktrees/");
-  
+  const worktreesIndex = gitdir.indexOf("/.git/worktrees/");
+
   if (worktreesIndex === -1) {
     return dirname(gitdir);
   }
-  
+
   return gitdir.substring(0, worktreesIndex);
 }
 
@@ -66,11 +66,23 @@ export function getRepoName(repoRoot: string): string {
 
 export function isWorktree(cwd: string): boolean {
   const gitPath = join(cwd, ".git");
-  
+
   if (!existsSync(gitPath)) {
     return false;
   }
-  
+
   const stat = lstatSync(gitPath);
   return stat.isFile();
+}
+
+export function findWorktreeRoot(cwd: string): string | null {
+  try {
+    const repoRoot = findRepoRoot(cwd);
+    if (isWorktree(repoRoot)) {
+      return repoRoot;
+    }
+    return null;
+  } catch {
+    return null;
+  }
 }

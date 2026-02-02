@@ -1,7 +1,7 @@
 import { Command } from "commander";
-import { input, select } from "@inquirer/prompts";
 import { execGit, commandExists, execCommand, PWTError } from "../utils/exec";
-import { findRepoRoot, getRepoName, isWorktree, getOriginalRepo, expandHome } from "../utils/git";
+import { findRepoRoot, getRepoName, isWorktree, getOriginalRepo } from "../utils/git";
+import { promptInput } from "../utils/prompt";
 import { getCurrentBranch } from "../utils/branch";
 import { addToIndex, getWorktreePath, ensureWorktreesDir, readIndex } from "../utils/index-manager";
 import { existsSync, mkdirSync } from "fs";
@@ -31,10 +31,10 @@ export function createNewCommand(): Command {
         // 4.2 Interactive prompt for worktree name if not provided
         let finalWorktreeName = worktreeName;
         if (!finalWorktreeName) {
-          finalWorktreeName = await input({
-            message: "Enter worktree name:",
-            validate: (value) => value.trim().length > 0 || "Name is required",
-          });
+          finalWorktreeName = await promptInput(
+            "Enter worktree name:",
+            (value) => value.length > 0 || "Name is required"
+          );
         }
         
         // 4.3 Determine source branch

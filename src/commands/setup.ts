@@ -1,7 +1,7 @@
 import { Command } from "commander";
 import { existsSync, readFileSync, appendFileSync } from "fs";
 import { join } from "path";
-import { confirm } from "@inquirer/prompts";
+import { promptConfirm } from "../utils/prompt";
 import { PWTError } from "../utils/exec";
 
 const ZSH_WRAPPER = `
@@ -58,10 +58,7 @@ export function createSetupCommand(): Command {
           if (zshrcContent.includes("pwt()")) {
             console.log("✓ PWT wrapper already installed in ~/.zshrc");
           } else {
-            const shouldInstall = await confirm({
-              message: "Install PWT wrapper in ~/.zshrc?",
-              default: true,
-            });
+            const shouldInstall = await promptConfirm("Install PWT wrapper in ~/.zshrc?", true);
             
             if (shouldInstall) {
               appendFileSync(zshrcPath, ZSH_WRAPPER);
@@ -77,10 +74,7 @@ export function createSetupCommand(): Command {
           if (bashrcContent.includes("pwt()")) {
             console.log("✓ PWT wrapper already installed in ~/.bashrc");
           } else {
-            const shouldInstall = await confirm({
-              message: "Install PWT wrapper in ~/.bashrc?",
-              default: true,
-            });
+            const shouldInstall = await promptConfirm("Install PWT wrapper in ~/.bashrc?", true);
             
             if (shouldInstall) {
               appendFileSync(bashrcPath, BASH_WRAPPER);
