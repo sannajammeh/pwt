@@ -1,5 +1,5 @@
 {
-  "name": "pwt",
+  "name": "pwt-cli",
   "version": "0.1.0",
   "module": "index.ts",
   "type": "module",
