@@ -1,48 +1,38 @@
-import { createInterface } from "readline";
+import { consola } from "consola";
 
 export async function promptConfirm(message: string, defaultValue = false): Promise<boolean> {
-  const rl = createInterface({
-    input: process.stdin,
-    output: process.stderr,
+  const result = await consola.prompt(message, {
+    type: "confirm",
+    initial: defaultValue,
   });
-
-  const hint = defaultValue ? "[Y/n]" : "[y/N]";
-
-  return new Promise((resolve) => {
-    rl.question(`${message} ${hint} `, (answer) => {
-      rl.close();
-      const trimmed = answer.trim().toLowerCase();
-      if (trimmed === "") {
-        resolve(defaultValue);
-      } else {
-        resolve(trimmed === "y" || trimmed === "yes");
-      }
-    });
-  });
+  if (typeof result === "symbol") {
+    process.exit(0);
+  }
+  return result;
 }
 
 export async function promptInput(message: string, validate?: (value: string) => string | true): Promise<string> {
-  const rl = createInterface({
-    input: process.stdin,
-    output: process.stderr,
-  });
+  const result = await consola.prompt(message, { type: "text" });
+  if (typeof result === "symbol") {
+    process.exit(0);
+  }
+  if (validate) {
+    const validation = validate(result);
+    if (validation !== true) {
+      consola.error(validation);
+      return promptInput(message, validate);
+    }
+  }
+  return result;
+}
 
-  return new Promise((resolve) => {
-    const ask = () => {
-      rl.question(`${message} `, (answer) => {
-        const trimmed = answer.trim();
-        if (validate) {
-          const result = validate(trimmed);
-          if (result !== true) {
-            process.stderr.write(`${result}\n`);
-            ask();
-            return;
-          }
-        }
-        rl.close();
-        resolve(trimmed);
-      });
-    };
-    ask();
+export async function promptSelect<T extends string>(message: string, options: { label: string; value: T }[]): Promise<T> {
+  const result = await consola.prompt(message, {
+    type: "select",
+    options,
   });
+  if (typeof result === "symbol") {
+    process.exit(0);
+  }
+  return result as T;
 }
