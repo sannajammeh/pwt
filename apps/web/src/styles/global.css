@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --color-sh-string: #98c379;
+  --color-sh-keyword: #e5c07b;
+  --color-sh-comment: #5c6370;
+  --color-sh-sign: #abb2bf;
+  --color-sh-identifier: #e5e5e5;
+  --color-sh-property: #61afef;
+  --color-sh-class: #e5c07b;
+}

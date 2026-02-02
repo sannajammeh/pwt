@@ -1,0 +1,54 @@
+---
+const faqs = [
+  {
+    question: 'What are Git worktrees?',
+    answer: 'Git worktrees allow you to have multiple working directories attached to the same repository, each checked out to a different branch. This means you can work on multiple branches simultaneously without stashing or committing incomplete work.'
+  },
+  {
+    question: 'What are the requirements?',
+    answer: 'PWT requires Git 2.5+ (for worktree support) and Bun as the runtime. It works on macOS, Linux, and Windows.'
+  },
+  {
+    question: 'How is this different from git checkout?',
+    answer: 'With git checkout, you can only have one branch active at a time. With worktrees, each branch lives in its own directory, so you can have multiple branches open in different terminal windows or editors simultaneously.'
+  }
+];
+---
+
+<section class="mt-12">
+  <h2 class="text-xs font-bold uppercase tracking-widest">Frequently Asked Questions</h2>
+  <div class="mt-4 border border-neutral-800 p-6">
+    {faqs.map((faq, index) => (
+      <div class:list={["faq-item", { "border-b border-neutral-800": index !== faqs.length - 1 }]}>
+        <button class="flex w-full items-center justify-between py-4 text-left text-sm font-medium uppercase tracking-wide" type="button" aria-expanded="false">
+          <span>{faq.question}</span>
+          <span class="icon text-neutral-500">+</span>
+        </button>
+        <div class="answer hidden pb-4">
+          <p class="text-sm text-neutral-400">{faq.answer}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('.faq-item button').forEach(button => {
+    button.addEventListener('click', () => {
+      const item = button.closest('.faq-item');
+      const answer = item?.querySelector('.answer');
+      const icon = button.querySelector('.icon');
+      const isOpen = !answer?.classList.contains('hidden');
+
+      if (isOpen) {
+        answer?.classList.add('hidden');
+        button.setAttribute('aria-expanded', 'false');
+        if (icon) icon.textContent = '+';
+      } else {
+        answer?.classList.remove('hidden');
+        button.setAttribute('aria-expanded', 'true');
+        if (icon) icon.textContent = '−';
+      }
+    });
+  });
+</script>

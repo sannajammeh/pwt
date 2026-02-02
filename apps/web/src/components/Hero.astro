@@ -1,0 +1,73 @@
+---
+const githubUrl = 'https://github.com/skala-org/pwt';
+const installCommands = {
+  bun: 'bun install -g pwt',
+  npm: 'npm install -g pwt',
+  pnpm: 'pnpm add -g pwt'
+};
+---
+
+<div class="mt-8 border border-neutral-800 p-8">
+  <p class="text-center text-sm uppercase tracking-wide">
+    A CLI for managing Git worktrees
+  </p>
+
+  <div class="mt-8 grid grid-cols-3 gap-4 text-center text-xs uppercase tracking-wide">
+    <div class="border border-neutral-800 py-3">Git Worktrees</div>
+    <div class="border border-neutral-800 py-3">Bun-powered</div>
+    <div class="border border-neutral-800 py-3">Zero Config</div>
+  </div>
+
+  <div class="mt-6 border border-neutral-800">
+    <div class="flex border-b border-neutral-800">
+      <button class="tab flex-1 py-2 text-xs uppercase tracking-wide transition-colors bg-neutral-800 text-neutral-100" data-pm="bun">bun</button>
+      <button class="tab flex-1 py-2 text-xs uppercase tracking-wide transition-colors text-neutral-500 hover:text-neutral-300" data-pm="npm">npm</button>
+      <button class="tab flex-1 py-2 text-xs uppercase tracking-wide transition-colors text-neutral-500 hover:text-neutral-300" data-pm="pnpm">pnpm</button>
+    </div>
+    <div class="flex items-center justify-between px-4 py-3">
+      <code id="install-cmd" class="text-xs text-neutral-300">{installCommands.bun}</code>
+      <button class="copy-btn text-neutral-500 hover:text-neutral-300 transition-colors" aria-label="Copy to clipboard">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="mt-4 flex items-center justify-between border border-neutral-800 px-4 py-3">
+    <span class="text-xs uppercase tracking-wide">GitHub</span>
+    <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-1 text-xs text-neutral-400 hover:text-neutral-200">
+      github.com/skala-org/pwt <span>&rarr;</span>
+    </a>
+  </div>
+</div>
+
+<script define:vars={{ installCommands }}>
+  const tabs = document.querySelectorAll('.tab');
+  const installCmd = document.getElementById('install-cmd');
+  const copyBtn = document.querySelector('.copy-btn');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => {
+        t.classList.remove('bg-neutral-800', 'text-neutral-100');
+        t.classList.add('text-neutral-500');
+      });
+      tab.classList.add('bg-neutral-800', 'text-neutral-100');
+      tab.classList.remove('text-neutral-500');
+      const pm = tab.getAttribute('data-pm');
+      if (installCmd && pm) {
+        installCmd.textContent = installCommands[pm];
+      }
+    });
+  });
+
+  if (copyBtn && installCmd) {
+    copyBtn.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(installCmd.textContent || '');
+      copyBtn.classList.add('text-green-400');
+      setTimeout(() => copyBtn.classList.remove('text-green-400'), 1500);
+    });
+  }
+</script>

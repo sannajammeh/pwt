@@ -1,0 +1,13 @@
+---
+const year = new Date().getFullYear();
+const githubUrl = 'https://github.com/skala-org/pwt';
+---
+
+<footer class="mt-16 flex items-center justify-between border-t border-neutral-800 pt-8 text-xs text-neutral-500">
+  <span>&copy; {year} PWT</span>
+  <div class="flex gap-6">
+    <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="hover:text-neutral-300 transition-colors">
+      GITHUB
+    </a>
+  </div>
+</footer>

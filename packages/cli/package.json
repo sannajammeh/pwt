@@ -1,0 +1,22 @@
+{
+  "name": "pwt",
+  "version": "0.1.0",
+  "module": "index.ts",
+  "type": "module",
+  "bin": {
+    "pwt": "./src/cli.ts",
+    "pwtx": "./src/pwtx.ts"
+  },
+  "scripts": {},
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "citty": "^0.1.6",
+    "consola": "^3.2.3",
+    "cli-table3": "^0.6.5"
+  }
+}

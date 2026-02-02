@@ -1,0 +1,40 @@
+---
+---
+
+<section class="mt-12">
+  <h2 class="text-xs font-bold uppercase tracking-widest">Example Workflow</h2>
+  <div class="mt-4 border border-neutral-800">
+    <div class="p-6">
+      <p class="text-sm text-neutral-400">
+        Work on multiple features simultaneously without stashing or committing incomplete work.
+        Each worktree is a separate directory with its own branch checked out.
+      </p>
+    </div>
+    <div class="border-t border-neutral-800">
+      <div class="border-b border-neutral-800 px-3 py-2 text-xs text-neutral-500">terminal</div>
+      <div class="bg-neutral-900">
+        <pre class="overflow-x-auto p-4 text-xs leading-relaxed"><code><span class="text-neutral-500"># Create a worktree for a new feature</span>
+<span class="text-neutral-500">$</span> <span class="text-amber-300">pwt new</span> <span class="text-green-400">feature/auth</span>
+<span class="text-neutral-400">Creating worktree for feature/auth...</span>
+<span class="text-green-400">✓ Worktree created at ~/code/myproject--feature-auth</span>
+
+<span class="text-neutral-500"># List all worktrees</span>
+<span class="text-neutral-500">$</span> <span class="text-amber-300">pwt ls</span>
+<span class="text-neutral-400">┌─────────────────┬────────────────────────────────┬────────┐
+│ Branch          │ Path                           │ Status │
+├─────────────────┼────────────────────────────────┼────────┤
+│ main            │ ~/code/myproject               │ active │
+│ feature/auth    │ ~/code/myproject--feature-auth │        │
+└─────────────────┴────────────────────────────────┴────────┘</span>
+
+<span class="text-neutral-500"># Switch to another worktree</span>
+<span class="text-neutral-500">$</span> <span class="text-amber-300">pwt open</span> <span class="text-green-400">main</span>
+<span class="text-green-400">✓ Now in ~/code/myproject</span>
+
+<span class="text-neutral-500"># Clean up when done</span>
+<span class="text-neutral-500">$</span> <span class="text-amber-300">pwt close</span>
+<span class="text-green-400">✓ Worktree removed</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>
