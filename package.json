@@ -10,5 +10,8 @@
   },
   "devDependencies": {
     "turbo": "^2"
+  },
+  "dependencies": {
+    "install": "^0.13.0"
   }
 }
