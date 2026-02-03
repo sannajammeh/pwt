@@ -1,15 +1,17 @@
 {
   "name": "pwt-cli",
   "version": "0.1.0",
-  "module": "index.ts",
+  "main": "./dist/cli.js",
   "type": "module",
+  "files": ["dist"],
   "bin": {
-    "pwt": "./src/cli.ts",
-    "pwtx": "./src/pwtx.ts"
+    "pwt": "./dist/cli.js",
+    "pwtx": "./dist/pwtx.js"
   },
-  "scripts": {},
-  "devDependencies": {
-    "@types/bun": "latest"
+  "scripts": {
+    "build": "bun build ./src/cli.ts ./src/pwtx.ts --outdir ./dist --target node",
+    "link": "bun run build && pnpm link --global",
+    "prepublishOnly": "bun run build"
   },
   "peerDependencies": {
     "typescript": "^5"

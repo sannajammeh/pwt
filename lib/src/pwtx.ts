@@ -1,3 +1,3 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 // This is the actual CLI binary - called by the shell wrapper function
 import "./cli";
