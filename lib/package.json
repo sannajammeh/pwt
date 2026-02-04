@@ -1,9 +1,10 @@
 {
   "name": "pwt-cli",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "main": "./dist/cli.js",
   "type": "module",
   "files": ["dist"],
+  "homepage": "https://pwt.skala.sh",
   "bin": {
     "pwt": "./dist/cli.js",
     "pwtx": "./dist/pwtx.js"
