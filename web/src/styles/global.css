@@ -9,3 +9,7 @@
   --color-sh-property: #61afef;
   --color-sh-class: #e5c07b;
 }
+
+:root {
+    color-scheme: dark;
+}
