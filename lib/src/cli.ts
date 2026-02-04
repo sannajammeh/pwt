@@ -7,10 +7,13 @@ import { lsCommand } from "./commands/ls";
 import { openCommand } from "./commands/open";
 import { setupCommand } from "./commands/setup";
 import { readFileSync, existsSync } from "fs";
-import { join } from "path";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 import { findRepoRoot, getRepoName } from "./utils/git";
 import { getWorktreePath } from "./utils/index-manager";
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 const packageJson = JSON.parse(readFileSync(join(__dirname, "../package.json"), "utf-8"));
 
 const SUBCOMMANDS = ["new", "close", "ls", "open", "setup", "--help", "-h", "--version", "-v"];

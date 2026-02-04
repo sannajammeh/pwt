@@ -1,26 +1,26 @@
-$ astro build
-00:37:44 [content] Syncing content
-00:37:44 [content] Synced content
-00:37:44 [types] Generated 30ms
-00:37:44 [build] output: "static"
-00:37:44 [build] mode: "static"
-00:37:44 [build] directory: /Users/personal/code/skala-org/pwt/apps/web/dist/
-00:37:44 [build] Collecting build info...
-00:37:44 [build] ✓ Completed in 39ms.
-00:37:44 [build] Building static entrypoints...
-00:37:45 [vite] ✓ built in 477ms
-00:37:45 [build] ✓ Completed in 577ms.
 
- building client (vite) 
-00:37:45 [vite] transforming...
-00:37:45 [vite] ✓ 1 modules transformed.
-00:37:45 [vite] rendering chunks...
-00:37:45 [vite] ✓ built in 8ms
+[0m[2m[35m$[0m [2m[1mastro build[0m
+[2m18:18:04[22m [34m[vite][39m Re-optimizing dependencies because vite config has changed
+[2m18:18:04[22m [34m[content][39m Syncing content
+[2m18:18:04[22m [34m[content][39m Synced content
+[2m18:18:04[22m [34m[types][39m Generated [2m212ms[22m
+[2m18:18:04[22m [34m[build][39m output: [34m"static"[39m
+[2m18:18:04[22m [34m[build][39m mode: [34m"static"[39m
+[2m18:18:04[22m [34m[build][39m directory: [34m/Users/personal/code/skala-org/pwt/web/dist/[39m
+[2m18:18:04[22m [34m[build][39m Collecting build info...
+[2m18:18:04[22m [34m[build][39m [32m✓ Completed in 216ms.[39m
+[2m18:18:04[22m [34m[build][39m Building static entrypoints...
+[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2K[1G[2m18:18:04[22m [34m[vite][39m [32m✓ built in 331ms[39m
+[2m18:18:04[22m [34m[build][39m [32m✓ Completed in 348ms.[39m
 
- generating static routes 
-00:37:45 ▶ src/pages/index.astro
-00:37:45   └─ /index.html (+3ms) 
-00:37:45 ✓ Completed in 8ms.
+[42m[30m building client (vite) [39m[49m
+[2K[1G[2m18:18:04[22m [34m[vite][39m [32m✓[39m 1 modules transformed.
+[2K[1Grendering chunks (1)...[2K[1G[2K[1G[2m18:18:04[22m [34m[vite][39m [32m✓ built in 6ms[39m
 
-00:37:45 [build] 1 page(s) built in 639ms
-00:37:45 [build] Complete!
+[42m[30m generating static routes [39m[49m
+[2m18:18:04[22m [32m▶[39m src/pages/index.astro
+[2m18:18:04[22m   [34m└─[39m [2m/index.html[22m [2m(+3ms)[22m 
+[2m18:18:04[22m [32m✓ Completed in 8ms.
+[39m
+[2m18:18:04[22m [34m[build][39m 1 page(s) built in [1m586ms[22m
+[2m18:18:04[22m [34m[build][39m [1mComplete![22m
