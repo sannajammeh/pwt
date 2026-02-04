@@ -5,6 +5,9 @@
   "type": "module",
   "files": ["dist"],
   "homepage": "https://pwt.skala.sh",
+  "repository": {
+    "url": "https://github.com/sannajammeh/pwt"
+  },
   "bin": {
     "pwt": "./dist/cli.js",
     "pwtx": "./dist/pwtx.js"
